@@ -1,5 +1,0 @@
-Known Bugs
-    Lexer: Empty File problem
-        What about empty strings/characters?
-        Characters/strings with no close quotes?
-	    Escape Characters
