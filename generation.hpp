@@ -29,6 +29,26 @@ enum Instruction_Tag {
     LD_A_R,         // A <- R
     LD_I_A,         // I <- A
     LD_R_A,         // R <- A
+    LD_REG_INT16,   // rr <- nn
+    LD_IX_INT16,
+    LD_IY_INT16,
+    LD_HL_lINT16,
+    LD_REG_lINT16,
+    LD_IX_lINT16,
+    LD_IY_lINT16,
+    LD_lINT16_HL,
+    LD_lINT16_REG,
+    LD_lINT16_IX,
+    LD_lINT16_IY,
+    LD_SP_HL,
+    LD_SP_IX,
+    LD_SP_IY,
+    PUSH_REG,
+    PUSH_IX,
+    PUSH_IY,
+    POP_REG,
+    POP_IX,
+    POP_IY,
 };
 
 typedef struct {

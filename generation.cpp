@@ -260,3 +260,193 @@ Instruction Load_R_A() {
     uint8_t code[INS_LEN] = {0xED, 0x4F, 0x00, 0x00};
     return newInstruction(LD_R_A, code, 2);
 }
+
+/* 16bit load group */
+Instruction Load_Reg_Int16(reg_dd r, uint16_t nn) {
+    uint8_t code[INS_LEN];
+
+    uint8_t opcode = 0b00000001;
+    opcode = opcode | (r << 4);
+    code[0] = opcode;
+
+    code[2] = (uint8_t) (0x00FF & nn);
+    code[1] = (uint8_t) (nn >> 8);
+
+    return newInstruction(LD_REG_INT16, code, 3);
+}
+
+Instruction Load_IX_Int16(uint16_t nn) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0x21;
+
+    code[3] = (uint8_t) (0x00FF & nn);
+    code[2] = (uint8_t) (nn >> 8);
+
+    return newInstruction(LD_IX_INT16, code, 4);
+}
+
+Instruction Load_IY_Int16(uint16_t nn) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0x21;
+
+    code[3] = (uint8_t) (0x00FF & nn);
+    code[2] = (uint8_t) (nn >> 8);
+
+    return newInstruction(LD_IY_INT16, code, 4);
+}   
+
+Instruction Load_HL_lInt16(uint16_t nn) {
+    uint8_t code[INS_LEN];
+
+    code[0] = 0x2A;
+    code[2] = (uint8_t) (0x00FF & nn);
+    code[1] = (uint8_t) (nn >> 8);
+
+    return newInstruction(LD_HL_lINT16, code, 3);
+}
+
+Instruction Load_Reg_lInt16(reg_dd r, uint16_t nn) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+
+    code[1] = 0b01001011 | (r << 4);
+
+    code[4] = (uint8_t) (0x00FF & nn);
+    code[3] = (uint8_t) (0x00FF & (nn >> 8));
+
+    return newInstruction(LD_REG_lINT16, code, 4);
+}
+
+Instruction Load_IX_lInt16(uint16_t nn) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0x2A;
+
+    code[3] = (uint8_t) (0x00FF & nn);
+    code[2] = (uint8_t) (nn >> 8);
+
+    return newInstruction(LD_IX_lINT16, code, 4);
+}
+
+Instruction Load_IY_lInt16(uint16_t nn) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0x2A;
+
+    code[3] = (uint8_t) (0x00FF & nn);
+    code[2] = (uint8_t) (nn >> 8);
+
+    return newInstruction(LD_IY_lINT16, code, 4);
+}
+
+Instruction Load_lInt16_HL(uint16_t nn) {
+    uint8_t code[INS_LEN];
+    code[0] = 0x22;
+    code[2] = (uint8_t) (0x00FF & nn);
+    code[1] = (uint8_t) (nn >> 8);
+
+    return newInstruction(LD_lINT16_HL, code, 3);
+}
+
+Instruction Load_lInt16_Reg(uint16_t nn, reg_dd r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0b01000011 | (r << 4);
+    code[3] = (uint8_t) (0x00FF & nn);
+    code[2] = (uint8_t) (nn >> 8);
+
+    return newInstruction(LD_lINT16_REG, code, 4);
+}
+
+Instruction Load_lInt16_IX(uint16_t nn) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0x22;
+
+    code[3] = (uint8_t) (0x00FF & nn);
+    code[2] = (uint8_t) (nn >> 8);
+
+    return newInstruction(LD_lINT16_IX, code, 4);
+}
+
+Instruction Load_lInt16_IY(uint16_t nn) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0x22;
+
+    code[3] = (uint8_t) (0x00FF & nn);
+    code[2] = (uint8_t) (nn >> 8);
+
+    return newInstruction(LD_lINT16_IY, code, 4);
+}
+
+Instruction Load_SP_HL() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xF9;
+
+    return newInstruction(LD_SP_HL, code, 1);
+}
+
+Instruction Load_SP_IX() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0xF9;
+
+    return newInstruction(LD_SP_IX, code, 2);
+}
+
+Instruction Load_SP_IY() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0xF9;
+
+    return newInstruction(LD_SP_IY, code, 2);
+}
+
+Instruction Push_Reg(reg_qq r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0b11000101 | (r << 4);
+
+    return newInstruction(PUSH_REG, code, 1);
+}
+
+Instruction Push_IX() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0xE5;
+
+    return newInstruction(PUSH_IX, code, 2);
+}
+
+Instruction Push_IY() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0xE5;
+
+    return newInstruction(PUSH_IY, code, 2);
+}
+
+Instruction Pop_Reg(reg_qq r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0b11000001 | (r << 4);
+
+    return newInstruction(POP_REG, code, 1);
+}
+
+Instruction Pop_IX() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0xE1;
+
+    return newInstruction(POP_IX, code, 2);
+}
+
+Instruction Pop_IY() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0xE1;
+
+    return newInstruction(POP_IX, code, 2);
+}
