@@ -7,7 +7,7 @@ using namespace std;
 
 
 #define UINT8_TO_SINT(VAL) \
-    ((VAL > 0b10000000) ? (0x80 - (VAL & 0b01111111)) : (int) VAL)
+    ((VAL > 0b10000000) ? (VAL - 0x80) : (int) VAL)
 
 BitTree::BitTree() {
     BitTree::tree = newNode();
@@ -180,7 +180,51 @@ Z80_Disassembler::Z80_Disassembler() {
     bt.AddInstruction(Load_R_A(), NO_NEUTRALS);
     bt.AddInstruction(Load_I_A(), NO_NEUTRALS);
 
-    
+    bt.AddInstruction(Add_A_Int8(0), SECOND_NEUTRAL);
+    bt.AddInstruction(Add_A_lHL(), NO_NEUTRALS);
+    bt.AddInstruction(Add_A_lIXd(0), THIRD_NEUTRAL);
+    bt.AddInstruction(Add_A_lIYd(0), THIRD_NEUTRAL);
+    bt.AddInstruction(Add_CY_A_Int8(0), SECOND_NEUTRAL);
+    bt.AddInstruction(Add_CY_A_lHL(), NO_NEUTRALS);
+    bt.AddInstruction(Add_CY_A_lIXd(0), THIRD_NEUTRAL);
+    bt.AddInstruction(Add_CY_A_lIYd(0), THIRD_NEUTRAL);
+
+    bt.AddInstruction(Sub_A_Int8(0), SECOND_NEUTRAL);
+    bt.AddInstruction(Sub_A_lHL(), NO_NEUTRALS);
+    bt.AddInstruction(Sub_A_lIXd(0), THIRD_NEUTRAL);
+    bt.AddInstruction(Sub_A_lIYd(0), THIRD_NEUTRAL);
+    bt.AddInstruction(Sub_CY_A_Int8(0), SECOND_NEUTRAL);
+    bt.AddInstruction(Sub_CY_A_lHL(), NO_NEUTRALS);
+    bt.AddInstruction(Sub_CY_A_lIXd(0), THIRD_NEUTRAL);
+    bt.AddInstruction(Sub_CY_A_lIYd(0), THIRD_NEUTRAL);
+
+    bt.AddInstruction(And_A_Int8(0), SECOND_NEUTRAL);
+    bt.AddInstruction(And_A_lHL(), NO_NEUTRALS);
+    bt.AddInstruction(And_A_lIXd(0), THIRD_NEUTRAL);
+    bt.AddInstruction(And_A_lIYd(0), THIRD_NEUTRAL);
+
+    bt.AddInstruction(Or_A_Int8(0), SECOND_NEUTRAL);
+    bt.AddInstruction(Or_A_lHL(), NO_NEUTRALS);
+    bt.AddInstruction(Or_A_lIXd(0), THIRD_NEUTRAL);
+    bt.AddInstruction(Or_A_lIYd(0), THIRD_NEUTRAL);
+
+    bt.AddInstruction(Xor_A_Int8(0), SECOND_NEUTRAL);
+    bt.AddInstruction(Xor_A_lHL(), NO_NEUTRALS);
+    bt.AddInstruction(Xor_A_lIXd(0), THIRD_NEUTRAL);
+    bt.AddInstruction(Xor_A_lIYd(0), THIRD_NEUTRAL);
+
+    bt.AddInstruction(Cp_A_Int8(0), SECOND_NEUTRAL);
+    bt.AddInstruction(Cp_A_lHL(), NO_NEUTRALS);
+    bt.AddInstruction(Cp_A_lIXd(0), THIRD_NEUTRAL);
+    bt.AddInstruction(Cp_A_lIYd(0), THIRD_NEUTRAL);
+
+    bt.AddInstruction(Dec_lHL(), NO_NEUTRALS);
+    bt.AddInstruction(Dec_lIXd(0), THIRD_NEUTRAL);
+    bt.AddInstruction(Dec_lIYd(0), THIRD_NEUTRAL);
+    bt.AddInstruction(Inc_lHL(), NO_NEUTRALS);
+    bt.AddInstruction(Inc_lIXd(0), THIRD_NEUTRAL);
+    bt.AddInstruction(Inc_lIYd(0), THIRD_NEUTRAL);
+
     for (reg_r r1 : rregs) {
         bt.AddInstruction(Load_Reg_Int8(r1, 0), SECOND_NEUTRAL);
         bt.AddInstruction(Load_Reg_lHL(r1), NO_NEUTRALS);
@@ -189,6 +233,17 @@ Z80_Disassembler::Z80_Disassembler() {
         bt.AddInstruction(Load_lHL_Reg(r1), NO_NEUTRALS);
         bt.AddInstruction(Load_lIXd_Reg(0, r1), THIRD_NEUTRAL);
         bt.AddInstruction(Load_lIYd_Reg(0, r1), THIRD_NEUTRAL);
+        bt.AddInstruction(Add_A_Reg(r1), NO_NEUTRALS);
+        bt.AddInstruction(Add_CY_A_Reg(r1), NO_NEUTRALS);
+        bt.AddInstruction(Sub_A_Reg(r1), NO_NEUTRALS);
+        bt.AddInstruction(Sub_CY_A_Reg(r1), NO_NEUTRALS);
+        bt.AddInstruction(And_A_Reg(r1), NO_NEUTRALS);
+        bt.AddInstruction(Or_A_Reg(r1), NO_NEUTRALS);
+        bt.AddInstruction(Xor_A_Reg(r1), NO_NEUTRALS);
+        bt.AddInstruction(Cp_A_Reg(r1), NO_NEUTRALS);
+        bt.AddInstruction(Dec_Reg(r1), NO_NEUTRALS);
+        bt.AddInstruction(Inc_Reg(r1), NO_NEUTRALS);
+
 
         for (reg_r r2 : rregs) {
             bt.AddInstruction(Load_Reg_Reg(r1, r2), NO_NEUTRALS);
@@ -220,6 +275,20 @@ Z80_Disassembler::Z80_Disassembler() {
         bt.AddInstruction(Pop_Reg(r), NO_NEUTRALS);
     }
 
+    bt.AddInstruction(Exchange_DE_HL(), NO_NEUTRALS);
+    bt.AddInstruction(Exchange_AF_AFALT(), NO_NEUTRALS);
+    bt.AddInstruction(Exchange_Alternates(), NO_NEUTRALS);
+    bt.AddInstruction(Exchange_lSP_HL(), NO_NEUTRALS);
+    bt.AddInstruction(Exchange_lSP_IX(), NO_NEUTRALS);
+    bt.AddInstruction(Exchange_lSP_IY(), NO_NEUTRALS);
+    bt.AddInstruction(Load_Decrement_Increase(), NO_NEUTRALS);
+    bt.AddInstruction(Load_Decrement_Increase_Repeat(), NO_NEUTRALS);
+    bt.AddInstruction(Load_Decrement_Decrement(), NO_NEUTRALS);
+    bt.AddInstruction(Load_Decrement_Decrement_Repeat(), NO_NEUTRALS);
+    bt.AddInstruction(Compare_Increase(), NO_NEUTRALS);
+    bt.AddInstruction(Compare_Increase_Repeat(), NO_NEUTRALS);
+    bt.AddInstruction(Compare_Decrease(), NO_NEUTRALS);
+    bt.AddInstruction(Compare_Decrease_Repeat(), NO_NEUTRALS);
 
     stringificationFns[LD_A_lINT16] = [](Instruction n) -> string {
         stringstream ss;
@@ -259,7 +328,7 @@ Z80_Disassembler::Z80_Disassembler() {
         stringstream ss;
         ss << "ld ";
         ss << stringify_rreg[((0b00111000 & n.code[1]) >> 3)];
-        ss << ", (IX ";
+        ss << ", (ix ";
         int val = UINT8_TO_SINT(n.code[2]);
         ss << ((n.code[2] & 0b10000000) ? "-" : "+");
         ss << " 0x";
@@ -272,7 +341,7 @@ Z80_Disassembler::Z80_Disassembler() {
         stringstream ss;
         ss << "ld ";
         ss << stringify_rreg[((0b00111000 & n.code[1]) >> 3)];
-        ss << ", (IY ";
+        ss << ", (iy ";
         int val = UINT8_TO_SINT(n.code[2]);
         ss << ((n.code[2] & 0b10000000) ? "-" : "+");
         ss << " 0x";
@@ -290,7 +359,7 @@ Z80_Disassembler::Z80_Disassembler() {
 
     stringificationFns[LD_lIXd_REG] = [&](Instruction n) -> string {
         stringstream ss;
-        ss << "ld (IX ";
+        ss << "ld (ix ";
         int val = UINT8_TO_SINT(n.code[2]);
         ss << ((n.code[2] & 0b10000000) ? "-" : "+");
         ss << " 0x";
@@ -302,7 +371,7 @@ Z80_Disassembler::Z80_Disassembler() {
 
     stringificationFns[LD_lIYd_REG] = [&](Instruction n) -> string {
         stringstream ss;
-        ss << "ld (IY ";
+        ss << "ld (iy ";
         int val = UINT8_TO_SINT(n.code[2]);
         ss << ((n.code[2] & 0b10000000) ? "-" : "+");
         ss << " 0x";
@@ -321,7 +390,7 @@ Z80_Disassembler::Z80_Disassembler() {
 
     stringificationFns[LD_lIXd_INT8] = [](Instruction n) -> string {
         stringstream ss;
-        ss << "ld (IX ";
+        ss << "ld (ix ";
         int val = UINT8_TO_SINT(n.code[2]);
         ss << ((n.code[2] & 0b10000000) ? "-" : "+");
         ss << " 0x";
@@ -333,7 +402,7 @@ Z80_Disassembler::Z80_Disassembler() {
 
     stringificationFns[LD_lIYd_INT8] = [](Instruction n) -> string {
         stringstream ss;
-        ss << "ld (IY ";
+        ss << "ld (iy ";
         int val = UINT8_TO_SINT(n.code[2]);
         ss << ((n.code[2] & 0b10000000) ? "-" : "+");
         ss << " 0x";
@@ -524,6 +593,488 @@ Z80_Disassembler::Z80_Disassembler() {
 
     stringificationFns[POP_IY] = [](Instruction n) -> string {
         return "pop iy";
+    };
+
+    stringificationFns[EX_DE_HL] = [](Instruction n) -> string {
+        return "ex de, hl";
+    };
+
+    stringificationFns[EX_AF_AFALT] = [](Instruction n) -> string {
+        return "ex af, af'";
+    };
+
+    stringificationFns[EXX] = [](Instruction n) -> string {
+        return "exx";
+    };
+
+    stringificationFns[EX_lSP_HL] = [](Instruction n) -> string {
+        return "ex (sp), hl";
+    };
+
+    stringificationFns[EX_lSP_IX] = [](Instruction n) -> string {
+        return "ex (sp), ix";
+    };
+
+    stringificationFns[EX_lSP_IY] = [](Instruction n) -> string {
+        return "ex (sp), iy";
+    };
+
+    stringificationFns[LDI] = [](Instruction n) -> string {
+        return "ldi";
+    };
+
+    stringificationFns[LDIR] = [](Instruction n) -> string {
+        return "ldir";
+    };
+
+    stringificationFns[LDD] = [](Instruction n) -> string {
+        return "ldd";
+    };
+
+    stringificationFns[LDDR] = [](Instruction n) -> string {
+        return "lddr";
+    };
+
+    stringificationFns[CPI] = [](Instruction n) -> string {
+        return "cpi";
+    };
+
+    stringificationFns[CPIR] = [](Instruction n) -> string {
+        return "cpir";
+    };
+
+    stringificationFns[CPD] = [](Instruction n) -> string {
+        return "cpd";
+    };
+
+    stringificationFns[CPDR] = [](Instruction n) -> string {
+        return "cpdr";
+    };
+
+    stringificationFns[ADD_A_REG] = [&](Instruction n) -> string {
+        stringstream ss;
+        ss << "add a, ";
+        ss << stringify_rreg[(n.code[0] & 0b00000111)];
+        return ss.str();
+    };
+
+    stringificationFns[ADD_A_INT8] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "add a, 0x";
+        ss << hex << (int) n.code[1];
+        return ss.str();
+    };
+
+    stringificationFns[ADD_A_lHL] = [](Instruction n) -> string {
+        return "add a, (hl)";
+    };
+
+    stringificationFns[ADD_A_lIXd] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "add a, (ix ";
+        ss << ((n.code[2] & 0b10000000) ? "-" : "+");
+        
+        int val = UINT8_TO_SINT(n.code[2]);
+        ss << " 0x";
+        ss << hex << val;
+        ss << ")";
+        
+        return ss.str();
+    };
+
+    stringificationFns[ADD_A_lIYd] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "add a, (iy ";
+        ss << ((n.code[2] & 0b10000000) ? "-" : "+");
+        
+        int val = UINT8_TO_SINT(n.code[2]);
+        ss << " 0x";
+        ss << hex << val;
+        ss << ")";
+        
+        return ss.str();
+    };
+
+    stringificationFns[ADDC_A_REG] = [&](Instruction n) -> string {
+        stringstream ss;
+        ss << "addc a, ";
+        ss << stringify_rreg[(n.code[0] & 0b00000111)];
+        return ss.str();
+    };
+
+    stringificationFns[ADDC_A_INT8] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "addc a, 0x";
+        ss << hex << (int) n.code[1];
+        return ss.str();
+    };
+
+    stringificationFns[ADDC_A_lHL] = [](Instruction n) -> string {
+        return "addc a, (hl)";
+    };
+
+    stringificationFns[ADDC_A_lIXd] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "addc a, (ix ";
+        ss << ((n.code[2] & 0b10000000) ? "-" : "+");
+        
+        int val = UINT8_TO_SINT(n.code[2]);
+        ss << " 0x";
+        ss << hex << val;
+        ss << ")";
+        
+        return ss.str();
+    };
+
+    stringificationFns[ADDC_A_lIYd] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "addc a, (iy ";
+        ss << ((n.code[2] & 0b10000000) ? "-" : "+");
+        
+        int val = UINT8_TO_SINT(n.code[2]);
+        ss << " 0x";
+        ss << hex << val;
+        ss << ")";
+        
+        return ss.str();
+    };
+
+    stringificationFns[SUB_A_REG] = [&](Instruction n) -> string {
+        stringstream ss;
+        ss << "sub a, ";
+        ss << stringify_rreg[(n.code[0] & 0b00000111)];
+        return ss.str();
+    };
+
+    stringificationFns[SUB_A_INT8] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "sub a, 0x";
+        ss << hex << (int) n.code[1];
+        return ss.str();
+    };
+
+    stringificationFns[SUB_A_lHL] = [](Instruction n) -> string {
+        return "sub a, (hl)";
+    };
+
+    stringificationFns[SUB_A_lIXd] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "sub a, (ix ";
+        ss << ((n.code[2] & 0b10000000) ? "-" : "+");
+        
+        int val = UINT8_TO_SINT(n.code[2]);
+        ss << " 0x";
+        ss << hex << val;
+        ss << ")";
+        
+        return ss.str();
+    };
+
+    stringificationFns[SUB_A_lIYd] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "sub a, (iy ";
+        ss << ((n.code[2] & 0b10000000) ? "-" : "+");
+        
+        int val = UINT8_TO_SINT(n.code[2]);
+        ss << " 0x";
+        ss << hex << val;
+        ss << ")";
+        
+        return ss.str();
+    };
+
+    stringificationFns[SUBC_A_REG] = [&](Instruction n) -> string {
+        stringstream ss;
+        ss << "subc a, ";
+        ss << stringify_rreg[(n.code[0] & 0b00000111)];
+        return ss.str();
+    };
+
+    stringificationFns[SUBC_A_INT8] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "subc a, 0x";
+        ss << hex << (int) n.code[1];
+        return ss.str();
+    };
+
+    stringificationFns[SUBC_A_lHL] = [](Instruction n) -> string {
+        return "subc a, (hl)";
+    };
+
+    stringificationFns[SUBC_A_lIXd] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "subc a, (ix ";
+        ss << ((n.code[2] & 0b10000000) ? "-" : "+");
+        
+        int val = UINT8_TO_SINT(n.code[2]);
+        ss << " 0x";
+        ss << hex << val;
+        ss << ")";
+        
+        return ss.str();
+    };
+
+    stringificationFns[SUBC_A_lIYd] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "subc a, (iy ";
+        ss << ((n.code[2] & 0b10000000) ? "-" : "+");
+        
+        int val = UINT8_TO_SINT(n.code[2]);
+        ss << " 0x";
+        ss << hex << val;
+        ss << ")";
+        
+        return ss.str();
+    };
+
+    stringificationFns[AND_A_REG] = [&](Instruction n) -> string {
+        stringstream ss;
+        ss << "and ";
+        ss << stringify_rreg[(n.code[0] & 0b00000111)];
+        return ss.str();
+    };
+
+    stringificationFns[AND_A_INT8] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "and 0x";
+        ss << hex << (int) n.code[1];
+        return ss.str();
+    };
+
+    stringificationFns[AND_A_lHL] = [](Instruction n) -> string {
+        return "and (hl)";
+    };
+
+    stringificationFns[AND_A_lIXd] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "and (ix ";
+        ss << ((n.code[2] & 0b10000000) ? "-" : "+");
+        
+        int val = UINT8_TO_SINT(n.code[2]);
+        ss << " 0x";
+        ss << hex << val;
+        ss << ")";
+        
+        return ss.str();
+    };
+
+    stringificationFns[AND_A_lIYd] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "and (iy ";
+        ss << ((n.code[2] & 0b10000000) ? "-" : "+");
+        
+        int val = UINT8_TO_SINT(n.code[2]);
+        ss << " 0x";
+        ss << hex << val;
+        ss << ")";
+        
+        return ss.str();
+    };
+
+    stringificationFns[OR_A_REG] = [&](Instruction n) -> string {
+        stringstream ss;
+        ss << "or ";
+        ss << stringify_rreg[(n.code[0] & 0b00000111)];
+        return ss.str();
+    };
+
+    stringificationFns[OR_A_INT8] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "or 0x";
+        ss << hex << (int) n.code[1];
+        return ss.str();
+    };
+
+    stringificationFns[OR_A_lHL] = [](Instruction n) -> string {
+        return "or (hl)";
+    };
+
+    stringificationFns[OR_A_lIXd] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "or (ix ";
+        ss << ((n.code[2] & 0b10000000) ? "-" : "+");
+        
+        int val = UINT8_TO_SINT(n.code[2]);
+        ss << " 0x";
+        ss << hex << val;
+        ss << ")";
+        
+        return ss.str();
+    };
+
+    stringificationFns[OR_A_lIYd] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "or (iy ";
+        ss << ((n.code[2] & 0b10000000) ? "-" : "+");
+        
+        int val = UINT8_TO_SINT(n.code[2]);
+        ss << " 0x";
+        ss << hex << val;
+        ss << ")";
+        
+        return ss.str();
+    };
+
+    stringificationFns[XOR_A_REG] = [&](Instruction n) -> string {
+        stringstream ss;
+        ss << "xor ";
+        ss << stringify_rreg[(n.code[0] & 0b00000111)];
+        return ss.str();
+    };
+
+    stringificationFns[XOR_A_INT8] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "xor 0x";
+        ss << hex << (int) n.code[1];
+        return ss.str();
+    };
+
+    stringificationFns[XOR_A_lHL] = [](Instruction n) -> string {
+        return "xor (hl)";
+    };
+
+    stringificationFns[XOR_A_lIXd] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "xor (ix ";
+        ss << ((n.code[2] & 0b10000000) ? "-" : "+");
+        
+        int val = UINT8_TO_SINT(n.code[2]);
+        ss << " 0x";
+        ss << hex << val;
+        ss << ")";
+        
+        return ss.str();
+    };
+
+    stringificationFns[XOR_A_lIYd] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "xor (iy ";
+        ss << ((n.code[2] & 0b10000000) ? "-" : "+");
+        
+        int val = UINT8_TO_SINT(n.code[2]);
+        ss << " 0x";
+        ss << hex << val;
+        ss << ")";
+        
+        return ss.str();
+    };
+
+    stringificationFns[CP_A_REG] = [&](Instruction n) -> string {
+        stringstream ss;
+        ss << "cp ";
+        ss << stringify_rreg[(n.code[0] & 0b00000111)];
+        return ss.str();
+    };
+
+    stringificationFns[CP_A_INT8] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "cp 0x";
+        ss << hex << (int) n.code[1];
+        return ss.str();
+    };
+
+    stringificationFns[CP_A_lHL] = [](Instruction n) -> string {
+        return "cp (hl)";
+    };
+
+    stringificationFns[CP_A_lIXd] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "cp (ix ";
+        ss << ((n.code[2] & 0b10000000) ? "-" : "+");
+        
+        int val = UINT8_TO_SINT(n.code[2]);
+        ss << " 0x";
+        ss << hex << val;
+        ss << ")";
+        
+        return ss.str();
+    };
+
+    stringificationFns[CP_A_lIYd] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "cp (iy ";
+        ss << ((n.code[2] & 0b10000000) ? "-" : "+");
+        
+        int val = UINT8_TO_SINT(n.code[2]);
+        ss << " 0x";
+        ss << hex << val;
+        ss << ")";
+        
+        return ss.str();
+    };
+
+    stringificationFns[INC_REG] = [&](Instruction n) -> string {
+        stringstream ss;
+        ss << "inc ";
+        ss << stringify_rreg[((n.code[0] & 0b00111000) >> 3)];
+        return ss.str();
+    };
+
+    stringificationFns[INC_lHL] = [](Instruction n) -> string {
+        return "inc (hl)";
+    };
+
+    stringificationFns[INC_lIXd] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "inc (ix ";
+        ss << ((n.code[2] & 0b10000000) ? "-" : "+");
+        
+        int val = UINT8_TO_SINT(n.code[2]);
+        ss << " 0x";
+        ss << hex << val;
+        ss << ")";
+        
+        return ss.str();
+    };
+
+    stringificationFns[INC_lIYd] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "inc (iy ";
+        ss << ((n.code[2] & 0b10000000) ? "-" : "+");
+        
+        int val = UINT8_TO_SINT(n.code[2]);
+        ss << " 0x";
+        ss << hex << val;
+        ss << ")";
+        
+        return ss.str();
+    };
+
+        stringificationFns[DEC_REG] = [&](Instruction n) -> string {
+        stringstream ss;
+        ss << "dec ";
+        ss << stringify_rreg[((n.code[0] & 0b00111000) >> 3)];
+        return ss.str();
+    };
+
+    stringificationFns[DEC_lHL] = [](Instruction n) -> string {
+        return "dec (hl)";
+    };
+
+    stringificationFns[DEC_lIXd] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "dec (ix ";
+        ss << ((n.code[2] & 0b10000000) ? "-" : "+");
+        
+        int val = UINT8_TO_SINT(n.code[2]);
+        ss << " 0x";
+        ss << hex << val;
+        ss << ")";
+        
+        return ss.str();
+    };
+
+    stringificationFns[DEC_lIYd] = [](Instruction n) -> string {
+        stringstream ss;
+        ss << "dec (iy ";
+        ss << ((n.code[2] & 0b10000000) ? "-" : "+");
+        
+        int val = UINT8_TO_SINT(n.code[2]);
+        ss << " 0x";
+        ss << hex << val;
+        ss << ")";
+        
+        return ss.str();
     };
 }
 

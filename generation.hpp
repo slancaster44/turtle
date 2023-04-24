@@ -49,6 +49,80 @@ enum Instruction_Tag {
     POP_REG,
     POP_IX,
     POP_IY,
+    EX_DE_HL,
+    EX_AF_AFALT,
+    EXX,
+    EX_lSP_HL,
+    EX_lSP_IX,
+    EX_lSP_IY,
+    LDI,
+    LDIR,
+    LDD,
+    LDDR,
+    CPI,
+    CPIR,
+    CPD,
+    CPDR,
+    ADD_A_REG,
+    ADD_A_INT8,
+    ADD_A_lHL,
+    ADD_A_lIXd,
+    ADD_A_lIYd,
+    ADDC_A_REG,
+    ADDC_A_INT8,
+    ADDC_A_lHL,
+    ADDC_A_lIXd,
+    ADDC_A_lIYd,
+    SUB_A_REG,
+    SUB_A_INT8,
+    SUB_A_lHL,
+    SUB_A_lIXd,
+    SUB_A_lIYd,
+    SUBC_A_REG,
+    SUBC_A_INT8,
+    SUBC_A_lHL,
+    SUBC_A_lIXd,
+    SUBC_A_lIYd,
+    AND_A_REG,
+    AND_A_INT8,
+    AND_A_lHL,
+    AND_A_lIXd,
+    AND_A_lIYd,
+    OR_A_REG,
+    OR_A_INT8,
+    OR_A_lHL,
+    OR_A_lIXd,
+    OR_A_lIYd,
+    XOR_A_REG,
+    XOR_A_INT8,
+    XOR_A_lHL,
+    XOR_A_lIXd,
+    XOR_A_lIYd,
+    CP_A_REG,
+    CP_A_INT8,
+    CP_A_lHL,
+    CP_A_lIXd,
+    CP_A_lIYd,
+    INC_REG,
+    INC_lHL,
+    INC_lIXd,
+    INC_lIYd,
+    DEC_REG,
+    DEC_lHL,
+    DEC_lIXd,
+    DEC_lIYd,
+    DAA,
+    CPL,
+    NEG,
+    CCF,
+    SCF,
+    NOP,
+    HALT,
+    DI,
+    EI,
+    IM0, 
+    IM1,
+    IM2,
 };
 
 typedef struct {
@@ -256,13 +330,13 @@ Instruction Cp_A_lIYd(uint8_t d);   // TMP <- A; A <- A - (IY + d); A <- TMP
 
 Instruction Inc_Reg(reg_r r);   // r++
 Instruction Inc_lHL();          // (HL)++
-Instruction Inc_lIX();          // (IX)++
-Instruction Inc_lIY();          // (IY)++
+Instruction Inc_lIXd(uint8_t d);          // (IX)++
+Instruction Inc_lIYd(uint8_t d);          // (IY)++
 
 Instruction Dec_Reg(reg_r r);   // r--
 Instruction Dec_lHL();          // (HL)--
-Instruction Dec_lIX();          // (IX)--
-Instruction Dec_lIY();          // (IY)--
+Instruction Dec_lIXd(uint8_t d);          // (IX)--
+Instruction Dec_lIYd(uint8_t d);          // (IY)--
 
 /* General Purpose Arithmatic and CPU Control Groups */
 Instruction Decimal_Adjust();       //Its complicated see pg 173

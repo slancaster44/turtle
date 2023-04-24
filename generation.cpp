@@ -450,3 +450,508 @@ Instruction Pop_IY() {
 
     return newInstruction(POP_IX, code, 2);
 }
+
+Instruction Exchange_DE_HL() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xEB;
+    return newInstruction(EX_DE_HL, code, 1);
+}
+
+Instruction Exchange_AF_AFALT() {
+    uint8_t code[INS_LEN];
+    code[0] = 0x08;
+    return newInstruction(EX_AF_AFALT, code, 1);
+} 
+
+Instruction Exchange_Alternates() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xD9;
+    return newInstruction(EXX, code, 1);
+}
+
+Instruction Exchange_lSP_HL() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xE3;
+    return newInstruction(EX_lSP_HL, code, 1);
+}
+
+Instruction Exchange_lSP_IX() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0xE3;
+    return newInstruction(EX_lSP_IX, code, 2);
+}
+
+Instruction Exchange_lSP_IY() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0xE3;
+    return newInstruction(EX_lSP_IY, code, 2);
+}
+
+Instruction Load_Decrement_Increase() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0xA0;
+    return newInstruction(LDI, code, 2);
+}
+
+Instruction Load_Decrement_Increase_Repeat() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0xB0;
+    return newInstruction(LDIR, code, 2);
+}
+
+Instruction Load_Decrement_Decrement() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0xA8;
+    return newInstruction(LDD, code, 2);
+}         
+Instruction Load_Decrement_Decrement_Repeat() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0xB8;
+    return newInstruction(LDDR, code, 2);
+}
+
+Instruction Compare_Increase() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0xA1;
+    return newInstruction(CPI, code, 2);
+}
+
+Instruction Compare_Increase_Repeat() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0xB1;
+    return newInstruction(CPIR, code, 2);
+}
+
+Instruction Compare_Decrease() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0xA9;
+    return newInstruction(CPD, code, 2);
+}
+
+Instruction Compare_Decrease_Repeat() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0xB9;
+    return newInstruction(CPDR, code, 2);
+}
+
+Instruction Add_A_Reg(reg_r r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0b10000000 | r;
+    return newInstruction(ADD_A_REG, code, 1);
+}
+
+Instruction Add_A_Int8(uint8_t n) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xC6;
+    code[1] = n;
+    return newInstruction(ADD_A_INT8, code, 2);
+}
+
+Instruction Add_A_lHL() {
+    uint8_t code[INS_LEN];
+    code[0] = 0x86;
+    return newInstruction(ADD_A_lHL, code, 1);
+}
+
+Instruction Add_A_lIXd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0x86;
+    code[2] = d;
+    return newInstruction(ADD_A_lIXd, code, 3);
+}
+
+Instruction Add_A_lIYd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0x86;
+    code[2] = d;
+    return newInstruction(ADD_A_lIYd, code, 3);
+}
+
+Instruction Add_CY_A_Reg(reg_r r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0b10001000 | r;
+    return newInstruction(ADDC_A_REG, code, 1);
+}
+
+Instruction Add_CY_A_Int8(uint8_t n) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xCE;
+    code[1] = n;
+    return newInstruction(ADDC_A_INT8, code, 2);
+}
+
+Instruction Add_CY_A_lHL() {
+    uint8_t code[INS_LEN];
+    code[0] = 0x8E;
+    return newInstruction(ADDC_A_lHL, code, 1);
+}
+
+Instruction Add_CY_A_lIXd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0x8E;
+    code[2] = d;
+    return newInstruction(ADDC_A_lIXd, code, 3);
+}
+
+Instruction Add_CY_A_lIYd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0x8E;
+    code[2] = d;
+    return newInstruction(ADDC_A_lIYd, code, 3);
+}
+
+Instruction Sub_A_Reg(reg_r r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0b10010000 | r;
+    return newInstruction(SUB_A_REG, code, 1);
+}
+
+Instruction Sub_A_Int8(uint8_t n) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xD6;
+    code[1] = n;
+    return newInstruction(SUB_A_INT8, code, 2);
+}
+
+Instruction Sub_A_lHL() {
+    uint8_t code[INS_LEN];
+    code[0] = 0x96;
+    return newInstruction(SUB_A_lHL, code, 1);
+}
+
+Instruction Sub_A_lIXd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0x96;
+    code[2] = d;
+    return newInstruction(SUB_A_lIXd, code, 3);
+}
+
+Instruction Sub_A_lIYd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0x96;
+    code[2] = d;
+    return newInstruction(SUB_A_lIYd, code, 3);
+}
+
+Instruction Sub_CY_A_Reg(reg_r r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0b10011000 | r;
+    return newInstruction(SUBC_A_REG, code, 1);
+}
+
+Instruction Sub_CY_A_Int8(uint8_t n) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDE;
+    code[1] = n;
+    return newInstruction(SUBC_A_INT8, code, 2);
+}
+
+Instruction Sub_CY_A_lHL() {
+    uint8_t code[INS_LEN];
+    code[0] = 0x9E;
+    return newInstruction(SUBC_A_lHL, code, 1);
+}
+
+Instruction Sub_CY_A_lIXd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0x9E;
+    code[2] = d;
+    return newInstruction(SUBC_A_lIXd, code, 3);
+}
+
+Instruction Sub_CY_A_lIYd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0x9E;
+    code[2] = d;
+    return newInstruction(SUBC_A_lIYd, code, 3);
+}
+
+Instruction And_A_Reg(reg_r r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0b10100000 | r;
+    return newInstruction(AND_A_REG, code, 1);
+}
+
+Instruction And_A_Int8(uint8_t n) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xE6;
+    code[1] = n;
+    return newInstruction(AND_A_INT8, code, 2);
+}
+
+Instruction And_A_lHL() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xA6;
+    return newInstruction(AND_A_lHL, code, 1);
+}
+
+Instruction And_A_lIXd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0xA6;
+    code[2] = d;
+    return newInstruction(AND_A_lIXd, code, 3);
+}
+
+Instruction And_A_lIYd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0xA6;
+    code[2] = d;
+    return newInstruction(AND_A_lIYd, code, 3);
+}
+
+Instruction Or_A_Reg(reg_r r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0b10110000 | r;
+    return newInstruction(OR_A_REG, code, 1);
+}
+
+Instruction Or_A_Int8(uint8_t n) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xF6;
+    code[1] = n;
+    return newInstruction(OR_A_INT8, code, 2);
+}
+
+Instruction Or_A_lHL() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xB6;
+    return newInstruction(OR_A_lHL, code, 1);
+}
+
+Instruction Or_A_lIXd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0xB6;
+    code[2] = d;
+    return newInstruction(OR_A_lIXd, code, 3);
+}
+
+Instruction Or_A_lIYd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0xB6;
+    code[2] = d;
+    return newInstruction(OR_A_lIYd, code, 3);
+}
+
+Instruction Xor_A_Reg(reg_r r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0b10100000 | r;
+    return newInstruction(XOR_A_REG, code, 1);
+}
+
+Instruction Xor_A_Int8(uint8_t n) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xEE;
+    code[1] = n;
+    return newInstruction(XOR_A_INT8, code, 2);
+}
+
+Instruction Xor_A_lHL() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xAE;
+    return newInstruction(XOR_A_lHL, code, 1);
+}
+
+Instruction Xor_A_lIXd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0xAE;
+    code[2] = d;
+    return newInstruction(XOR_A_lIXd, code, 3);
+}
+
+Instruction Xor_A_lIYd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0xAE;
+    code[2] = d;
+    return newInstruction(XOR_A_lIYd, code, 3);
+}
+
+Instruction Cp_A_Reg(reg_r r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0b10111000 | r;
+    return newInstruction(CP_A_REG, code, 1);
+}
+
+Instruction Cp_A_Int8(uint8_t n) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFE;
+    code[1] = n;
+    return newInstruction(CP_A_INT8, code, 2);
+}
+
+Instruction Cp_A_lHL() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xBE;
+    return newInstruction(CP_A_lHL, code, 1);
+}
+
+Instruction Cp_A_lIXd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0xBE;
+    code[2] = d;
+    return newInstruction(CP_A_lIXd, code, 3);
+}
+
+Instruction Cp_A_lIYd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0xBE;
+    code[2] = d;
+    return newInstruction(CP_A_lIYd, code, 3);
+}
+
+Instruction Inc_Reg(reg_r r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0b00000100 | (r << 3);
+    return newInstruction(INC_REG, code, 1);
+}
+
+Instruction Inc_lHL() {
+    uint8_t code[INS_LEN];
+    code[0] = 0x34;
+    return newInstruction(INC_lHL, code, 1);
+}
+
+Instruction Inc_lIXd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0x34;
+    code[2] = d;
+    return newInstruction(INC_lIXd, code, 3);
+}
+
+Instruction Inc_lIYd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0x34;
+    code[2] = d;
+    return newInstruction(INC_lIYd, code, 3);
+}
+
+Instruction Dec_Reg(reg_r r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0b00000101 | (r << 3);
+    return newInstruction(DEC_REG, code, 1);
+}
+
+Instruction Dec_lHL() {
+    uint8_t code[INS_LEN];
+    code[0] = 0x35;
+    return newInstruction(DEC_lHL, code, 1);
+}
+
+Instruction Dec_lIXd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0x35;
+    code[2] = d;
+    return newInstruction(DEC_lIXd, code, 3);
+}
+
+Instruction Dec_lIYd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0x35;
+    code[2] = d;
+    return newInstruction(DEC_lIYd, code, 3);
+}
+
+Instruction Decimal_Adjust() {
+    uint8_t code[INS_LEN];
+    code[0] = 0x27;
+    return newInstruction(DAA, code, 1);
+}
+
+Instruction Complement_A() {
+    uint8_t code[INS_LEN];
+    code[0] = 0x2F;
+    return newInstruction(CPL, code, 1);
+}
+
+Instruction Negate() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0x44;
+    return newInstruction(NEG, code, 2);
+}
+
+Instruction Complement_CF() {
+    uint8_t code[INS_LEN];
+    code[0] = 0x3F;
+    return newInstruction(CCF, code, 1);
+}
+
+Instruction Set_Carry_Flag() {
+    uint8_t code[INS_LEN];
+    code[0] = 0x37;
+    return newInstruction(SCF, code, 1);
+}
+
+Instruction Nop() {
+    uint8_t code[INS_LEN];
+    code[0] = 0x00;
+    return newInstruction(NOP, code, 1);
+}
+
+Instruction Halt() {
+    uint8_t code[INS_LEN];
+    code[0] = 0x76;
+    return newInstruction(HALT, code, 1);
+}
+
+Instruction Disable_Interrupts() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xF3;
+    return newInstruction(DI, code, 1);
+}
+
+Instruction Enable_Interrupts() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFB;
+    return newInstruction(EI, code, 1);
+}
+
+Instruction Interrupt_Mode0() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0x46;
+    return newInstruction(IM0, code, 2);
+}
+
+Instruction Interrupt_Mode1() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0x56;
+    return newInstruction(IM1, code, 2);
+}
+
+Instruction Interrupt_Mode2() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0x5E;
+    return newInstruction(IM2, code, 2);
+}
