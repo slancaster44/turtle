@@ -695,27 +695,27 @@ Z80_Disassembler::Z80_Disassembler() {
         return ss.str();
     };
 
-    stringificationFns[ADDC_A_REG] = [&](Instruction n) -> string {
+    stringificationFns[ADC_A_REG] = [&](Instruction n) -> string {
         stringstream ss;
-        ss << "addc a, ";
+        ss << "adc a, ";
         ss << stringify_rreg[(n.code[0] & 0b00000111)];
         return ss.str();
     };
 
-    stringificationFns[ADDC_A_INT8] = [](Instruction n) -> string {
+    stringificationFns[ADC_A_INT8] = [](Instruction n) -> string {
         stringstream ss;
-        ss << "addc a, 0x";
+        ss << "adc a, 0x";
         ss << hex << (int) n.code[1];
         return ss.str();
     };
 
-    stringificationFns[ADDC_A_lHL] = [](Instruction n) -> string {
-        return "addc a, (hl)";
+    stringificationFns[ADC_A_lHL] = [](Instruction n) -> string {
+        return "adc a, (hl)";
     };
 
-    stringificationFns[ADDC_A_lIXd] = [](Instruction n) -> string {
+    stringificationFns[ADC_A_lIXd] = [](Instruction n) -> string {
         stringstream ss;
-        ss << "addc a, (ix ";
+        ss << "adc a, (ix ";
         ss << ((n.code[2] & 0b10000000) ? "-" : "+");
         
         int val = UINT8_TO_SINT(n.code[2]);
@@ -726,9 +726,9 @@ Z80_Disassembler::Z80_Disassembler() {
         return ss.str();
     };
 
-    stringificationFns[ADDC_A_lIYd] = [](Instruction n) -> string {
+    stringificationFns[ADC_A_lIYd] = [](Instruction n) -> string {
         stringstream ss;
-        ss << "addc a, (iy ";
+        ss << "adc a, (iy ";
         ss << ((n.code[2] & 0b10000000) ? "-" : "+");
         
         int val = UINT8_TO_SINT(n.code[2]);
@@ -783,27 +783,27 @@ Z80_Disassembler::Z80_Disassembler() {
         return ss.str();
     };
 
-    stringificationFns[SUBC_A_REG] = [&](Instruction n) -> string {
+    stringificationFns[SBC_A_REG] = [&](Instruction n) -> string {
         stringstream ss;
-        ss << "subc a, ";
+        ss << "sbc a, ";
         ss << stringify_rreg[(n.code[0] & 0b00000111)];
         return ss.str();
     };
 
-    stringificationFns[SUBC_A_INT8] = [](Instruction n) -> string {
+    stringificationFns[SBC_A_INT8] = [](Instruction n) -> string {
         stringstream ss;
-        ss << "subc a, 0x";
+        ss << "sbc a, 0x";
         ss << hex << (int) n.code[1];
         return ss.str();
     };
 
-    stringificationFns[SUBC_A_lHL] = [](Instruction n) -> string {
-        return "subc a, (hl)";
+    stringificationFns[SBC_A_lHL] = [](Instruction n) -> string {
+        return "sbc a, (hl)";
     };
 
-    stringificationFns[SUBC_A_lIXd] = [](Instruction n) -> string {
+    stringificationFns[SBC_A_lIXd] = [](Instruction n) -> string {
         stringstream ss;
-        ss << "subc a, (ix ";
+        ss << "sbc a, (ix ";
         ss << ((n.code[2] & 0b10000000) ? "-" : "+");
         
         int val = UINT8_TO_SINT(n.code[2]);
@@ -814,9 +814,9 @@ Z80_Disassembler::Z80_Disassembler() {
         return ss.str();
     };
 
-    stringificationFns[SUBC_A_lIYd] = [](Instruction n) -> string {
+    stringificationFns[SBC_A_lIYd] = [](Instruction n) -> string {
         stringstream ss;
-        ss << "subc a, (iy ";
+        ss << "sbc a, (iy ";
         ss << ((n.code[2] & 0b10000000) ? "-" : "+");
         
         int val = UINT8_TO_SINT(n.code[2]);
@@ -1075,6 +1075,55 @@ Z80_Disassembler::Z80_Disassembler() {
         ss << ")";
         
         return ss.str();
+    };
+
+    stringificationFns[DAA] = [](Instruction n) -> string {
+        return "daa";
+    };
+
+    stringificationFns[CPL] = [](Instruction n) -> string {
+        return "cpl";
+    };
+
+    stringificationFns[NEG] = [](Instruction n) -> string {
+        return "neg";
+    };
+
+    stringificationFns[CCF] = [](Instruction n) -> string {
+        return "ccf";
+    };
+
+    stringificationFns[SCF] = [](Instruction n) -> string {
+        return "scf";
+    };
+
+    stringificationFns[NOP] = [](Instruction n) -> string {
+        return "nop";
+    };
+
+    stringificationFns[HALT] = [](Instruction n) -> string {
+        return "halt";
+    };
+
+    stringificationFns[DI] = [](Instruction n) -> string {
+        return "di";
+    };
+
+    stringificationFns[EI] = [](Instruction n) -> string {
+        return "ei";
+    };
+
+    stringificationFns[IM0] = [](Instruction n) -> string {
+        return "im 0";
+    };
+
+    stringificationFns[IM1] = [](Instruction n) -> string {
+        return "im 1";
+    };
+
+
+    stringificationFns[IM2] = [](Instruction n) -> string {
+        return "im 2";
     };
 }
 

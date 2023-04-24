@@ -582,20 +582,20 @@ Instruction Add_A_lIYd(uint8_t d) {
 Instruction Add_CY_A_Reg(reg_r r) {
     uint8_t code[INS_LEN];
     code[0] = 0b10001000 | r;
-    return newInstruction(ADDC_A_REG, code, 1);
+    return newInstruction(ADC_A_REG, code, 1);
 }
 
 Instruction Add_CY_A_Int8(uint8_t n) {
     uint8_t code[INS_LEN];
     code[0] = 0xCE;
     code[1] = n;
-    return newInstruction(ADDC_A_INT8, code, 2);
+    return newInstruction(ADC_A_INT8, code, 2);
 }
 
 Instruction Add_CY_A_lHL() {
     uint8_t code[INS_LEN];
     code[0] = 0x8E;
-    return newInstruction(ADDC_A_lHL, code, 1);
+    return newInstruction(ADC_A_lHL, code, 1);
 }
 
 Instruction Add_CY_A_lIXd(uint8_t d) {
@@ -603,7 +603,7 @@ Instruction Add_CY_A_lIXd(uint8_t d) {
     code[0] = 0xDD;
     code[1] = 0x8E;
     code[2] = d;
-    return newInstruction(ADDC_A_lIXd, code, 3);
+    return newInstruction(ADC_A_lIXd, code, 3);
 }
 
 Instruction Add_CY_A_lIYd(uint8_t d) {
@@ -611,7 +611,7 @@ Instruction Add_CY_A_lIYd(uint8_t d) {
     code[0] = 0xFD;
     code[1] = 0x8E;
     code[2] = d;
-    return newInstruction(ADDC_A_lIYd, code, 3);
+    return newInstruction(ADC_A_lIYd, code, 3);
 }
 
 Instruction Sub_A_Reg(reg_r r) {
@@ -652,20 +652,20 @@ Instruction Sub_A_lIYd(uint8_t d) {
 Instruction Sub_CY_A_Reg(reg_r r) {
     uint8_t code[INS_LEN];
     code[0] = 0b10011000 | r;
-    return newInstruction(SUBC_A_REG, code, 1);
+    return newInstruction(SBC_A_REG, code, 1);
 }
 
 Instruction Sub_CY_A_Int8(uint8_t n) {
     uint8_t code[INS_LEN];
     code[0] = 0xDE;
     code[1] = n;
-    return newInstruction(SUBC_A_INT8, code, 2);
+    return newInstruction(SBC_A_INT8, code, 2);
 }
 
 Instruction Sub_CY_A_lHL() {
     uint8_t code[INS_LEN];
     code[0] = 0x9E;
-    return newInstruction(SUBC_A_lHL, code, 1);
+    return newInstruction(SBC_A_lHL, code, 1);
 }
 
 Instruction Sub_CY_A_lIXd(uint8_t d) {
@@ -673,7 +673,7 @@ Instruction Sub_CY_A_lIXd(uint8_t d) {
     code[0] = 0xDD;
     code[1] = 0x9E;
     code[2] = d;
-    return newInstruction(SUBC_A_lIXd, code, 3);
+    return newInstruction(SBC_A_lIXd, code, 3);
 }
 
 Instruction Sub_CY_A_lIYd(uint8_t d) {
@@ -681,7 +681,7 @@ Instruction Sub_CY_A_lIYd(uint8_t d) {
     code[0] = 0xFD;
     code[1] = 0x9E;
     code[2] = d;
-    return newInstruction(SUBC_A_lIYd, code, 3);
+    return newInstruction(SBC_A_lIYd, code, 3);
 }
 
 Instruction And_A_Reg(reg_r r) {
@@ -954,4 +954,78 @@ Instruction Interrupt_Mode2() {
     code[0] = 0xED;
     code[1] = 0x5E;
     return newInstruction(IM2, code, 2);
+}
+
+Instruction Add_HL_Reg(reg_dd r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0b00001001 | (r << 4);
+    return newInstruction(ADD_HL_REG, code, 1);
+}
+
+Instruction Add_CY_HL_Reg(reg_dd r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0b01001010 | (r << 4);
+    return newInstruction(ADC_HL_REG, code, 2);
+}
+
+Instruction Sub_CY_HL_Reg(reg_dd r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0b01000010 | (r << 4);
+    return newInstruction(SBC_HL_REG, code, 2);
+}
+
+Instruction Add_IX_Reg(reg_pp r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0b00001001 | (r << 4);
+    return newInstruction(ADD_IX_REG, code, 2);
+}
+
+Instruction Add_IY_Reg(reg_rr r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0b00001001 | (r << 4);
+    return newInstruction(ADD_IY_REG, code, 2);
+}
+
+Instruction Inc_Reg16(reg_dd r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0b00000011 | (r << 4);
+    return newInstruction(INC_REG16, code, 1);
+}
+
+Instruction Inc_IX() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0x23;
+    return newInstruction(INC_IX, code, 2);
+}
+
+Instruction Inc_IY() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0x23;
+    return newInstruction(INC_IY, code, 2);
+}
+
+Instruction Dec_Reg16(reg_dd r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0b00001011 | (r << 4);
+    return newInstruction(DEC_REG16, code, 1);
+}
+
+Instruction Dec_IX() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0x2B;
+    return newInstruction(DEC_IX, code, 2);
+}
+
+Instruction Dec_IY() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0x2B;
+    return newInstruction(DEC_IY, code, 2);
 }

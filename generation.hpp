@@ -68,21 +68,21 @@ enum Instruction_Tag {
     ADD_A_lHL,
     ADD_A_lIXd,
     ADD_A_lIYd,
-    ADDC_A_REG,
-    ADDC_A_INT8,
-    ADDC_A_lHL,
-    ADDC_A_lIXd,
-    ADDC_A_lIYd,
+    ADC_A_REG,
+    ADC_A_INT8,
+    ADC_A_lHL,
+    ADC_A_lIXd,
+    ADC_A_lIYd,
     SUB_A_REG,
     SUB_A_INT8,
     SUB_A_lHL,
     SUB_A_lIXd,
     SUB_A_lIYd,
-    SUBC_A_REG,
-    SUBC_A_INT8,
-    SUBC_A_lHL,
-    SUBC_A_lIXd,
-    SUBC_A_lIYd,
+    SBC_A_REG,
+    SBC_A_INT8,
+    SBC_A_lHL,
+    SBC_A_lIXd,
+    SBC_A_lIYd,
     AND_A_REG,
     AND_A_INT8,
     AND_A_lHL,
@@ -123,6 +123,17 @@ enum Instruction_Tag {
     IM0, 
     IM1,
     IM2,
+    ADD_HL_REG,
+    ADC_HL_REG,
+    SBC_HL_REG,
+    ADD_IX_REG,
+    ADD_IY_REG,
+    INC_REG16,
+    INC_IX,
+    INC_IY,
+    DEC_REG16,
+    DEC_IX,
+    DEC_IY,
 };
 
 typedef struct {
@@ -358,10 +369,10 @@ Instruction Add_CY_HL_Reg(reg_dd r);    //HL <- HL + CY + r
 Instruction Sub_CY_HL_Reg(reg_dd r);    //HL <- HL - CY - r
 Instruction Add_IX_Reg(reg_pp r);       //IX <- IX + r
 Instruction Add_IY_Reg(reg_rr r);       //IX <- IX + r
-Instruction Inc_Reg(reg_dd r);          //r++
+Instruction Inc_Reg16(reg_dd r);          //r++
 Instruction Inc_IX();                   //IX++
 Instruction Inc_IY();                   //IY++
-Instruction Dec_Reg(reg_dd r);          //r--
+Instruction Dec_Reg16(reg_dd r);          //r--
 Instruction Dec_IX();                   //IX--
 Instruction Dec_IY();                   //IY--
 
