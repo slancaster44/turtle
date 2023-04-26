@@ -354,7 +354,7 @@ Instruction Decimal_Adjust();       //Its complicated see pg 173
 Instruction Complement_A();         // A <- A ^| 0b11111111
 Instruction Negate();               // A <- 0 - A
 Instruction Complement_CF();        // CY <- CY ^| 1
-Instruction Set_Carry_Flag();       // CY <- 1
+Instruction Set_CF();       // CY <- 1
 Instruction Nop();                  //Nothing Intresting
 Instruction Halt();                 //No catch fire
 Instruction Disable_Interrupts();   //Does what it says

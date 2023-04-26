@@ -1,0 +1,121 @@
+Defining Variables
+    <type> <identifier> <operator> <expression>
+
+    Types:
+        Primatives:
+            u8
+            u16
+            i8
+            i16
+            char
+
+        Compound:
+            record (see below)
+            set (see below)
+
+    Operator:
+        := -- Indicates immutable variable
+        =  -- Indicates mutable variable
+
+    Note all variables must have 
+    default value at initialization
+
+    Example:
+        u8 ten := 10
+        u8 someNumber = 23
+        someNumber = 45
+
+Set:
+    Fixed Size: 
+        set[<type>, <size>] <identifier> <operator> {<value>, ... }
+
+        Operator:
+            := -- Indicates immutable variable
+            =  -- Indicates mutable variable
+
+    Dynamic Size:
+        set[<type>] <identifier> := {<value>, ...}
+
+    Fixed Size Strings:
+        set[char,<number_of_characters>] <identifier> <operator> "<characters>"
+
+    Access:
+        <identifier_for_set>[<index>]
+
+    Modification:
+        <identifier_for_set>[<index>] = <value>
+
+    Get size of set in number of elements
+        length(<set>)
+
+    Get size in number of bytes
+        sizeof(<set>)
+
+    Notes:
+        Immutable variables can be derived from immutable sets, but not
+        from mutable sets
+
+        Mutable sets must be deleted from memory using the 'free' command
+
+    Example:
+        set[u8, 10] numbers := {1, 2, 3, 4, 5, 6, 7, 8, 9, 0}
+        u8 zero := numbers[9]
+
+        set[u8] oranges = {}
+
+    Other Operations
+        push(<set>, <element>)
+        pop(<set>, <elment>)
+        union(<set>, <set>)
+
+
+Record:
+    record <name> {
+        <type> <identifier>
+        ...
+
+        constructor(<arguments>) {
+            <statements>
+        }
+
+        deconstructor(<arguments>) {
+            <statements>
+        }
+    }
+
+    Example:
+        record Person {
+            u8 age = 0
+            set[char] name = ""
+
+            constructor(u8 age_arg, set[char] name_arg) {
+                name = name_arg
+                age = age_arg
+            }
+
+            deconstructor() {
+                free age
+            }
+        }
+
+Subroutines:
+    sub <anme>(<args>) -> <ret_type> {
+        <commands>
+
+        return <value>
+    }
+
+
+    Example:
+        sub add(u8 v1, u8 v2) -> u8 {
+            return v1 + v2
+        }
+
+Type Casting:
+    Functions:
+        upper_byte(<some_16_bit_value>) -- Return u8
+        lower_byte(<some_16_bit_value>) --
+        extend_byte(<some_8_bit_value>) -- return u16
+
+        unsign(<some_signed_value>) -- returns unsigned version
+        

@@ -97,6 +97,8 @@ void test_diss() {
         0x34, //inc (hl)
         0xDD, 0x34, 0x04, //inc (ix + 4)
         0xFD, 0x34, 0x05, //inc (ix + 5)
+        0b00011001,
+        0xED, 0b01011010,
     };
 
     Z80_Disassembler dis;

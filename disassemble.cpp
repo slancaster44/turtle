@@ -147,6 +147,8 @@ Z80_Disassembler::Z80_Disassembler() {
     rregs = {A_R, B_R, C_R, D_R, E_R, H_R, L_R};
     qqregs = {BC_QQ, DE_QQ, HL_QQ, AF_QQ};
     ddregs = {BC_DD, HL_DD, DE_DD, SP_DD};
+    ppregs = {BC_PP, DE_PP, IX_PP, SP_PP};
+    rrregs = {BC_RR, DE_RR, IY_RR, SP_RR};
 
     stringify_rreg[A_R] = "a";
     stringify_rreg[B_R] = "b";
@@ -165,6 +167,16 @@ Z80_Disassembler::Z80_Disassembler() {
     stringify_qqregs[DE_QQ] = "de";
     stringify_qqregs[HL_QQ] = "hl";
     stringify_qqregs[AF_QQ] = "af";
+
+    stringify_ppregs[BC_PP] = "bc";
+    stringify_ppregs[DE_PP] = "de";
+    stringify_ppregs[IX_PP] = "ix";
+    stringify_ppregs[SP_PP] = "sp";
+
+    stringify_rrregs[BC_RR] = "bc";
+    stringify_rrregs[DE_RR] = "de";
+    stringify_rrregs[IY_RR] = "iy";
+    stringify_rrregs[SP_RR] = "sp";
 
     bt.AddInstruction(Load_A_lInt16(0), SECOND_NEUTRAL | THIRD_NEUTRAL);
     bt.AddInstruction(Load_lHL_Int8(0), SECOND_NEUTRAL);
@@ -265,10 +277,25 @@ Z80_Disassembler::Z80_Disassembler() {
     bt.AddInstruction(Load_lInt16_HL(0), SECOND_NEUTRAL | THIRD_NEUTRAL);
     bt.AddInstruction(Load_IX_lInt16(0), THIRD_NEUTRAL | FOURTH_NEUTRAL);
     bt.AddInstruction(Load_IY_lInt16(0), THIRD_NEUTRAL | FOURTH_NEUTRAL);
+    bt.AddInstruction(Inc_IX(), NO_NEUTRALS);
+    bt.AddInstruction(Inc_IY(), NO_NEUTRALS);
+    bt.AddInstruction(Dec_IX(), NO_NEUTRALS);
+    bt.AddInstruction(Dec_IY(), NO_NEUTRALS);
+    for (reg_rr r : rrregs) {
+        bt.AddInstruction(Add_IY_Reg(r), NO_NEUTRALS);
+    }
+    for (reg_pp r : ppregs) {
+        bt.AddInstruction(Add_IX_Reg(r), NO_NEUTRALS);
+    }
     for (reg_dd r : ddregs) {
         bt.AddInstruction(Load_Reg_Int16(r, 0), SECOND_NEUTRAL | THIRD_NEUTRAL);
         bt.AddInstruction(Load_Reg_lInt16(r, 0), FOURTH_NEUTRAL | THIRD_NEUTRAL);
         bt.AddInstruction(Load_lInt16_Reg(0, r), FOURTH_NEUTRAL | THIRD_NEUTRAL);
+        bt.AddInstruction(Add_HL_Reg(r), NO_NEUTRALS);
+        bt.AddInstruction(Add_CY_HL_Reg(r), NO_NEUTRALS);
+        bt.AddInstruction(Sub_CY_HL_Reg(r), NO_NEUTRALS);
+        bt.AddInstruction(Inc_Reg16(r), NO_NEUTRALS);
+        bt.AddInstruction(Dec_Reg16(r), NO_NEUTRALS);
     }
     for (reg_qq r : qqregs) {
         bt.AddInstruction(Push_Reg(r), NO_NEUTRALS);
@@ -289,6 +316,20 @@ Z80_Disassembler::Z80_Disassembler() {
     bt.AddInstruction(Compare_Increase_Repeat(), NO_NEUTRALS);
     bt.AddInstruction(Compare_Decrease(), NO_NEUTRALS);
     bt.AddInstruction(Compare_Decrease_Repeat(), NO_NEUTRALS);
+
+    bt.AddInstruction(Decimal_Adjust(), NO_NEUTRALS);
+    bt.AddInstruction(Complement_A(), NO_NEUTRALS);
+    bt.AddInstruction(Negate(), NO_NEUTRALS);
+    bt.AddInstruction(Complement_CF(), NO_NEUTRALS);
+    bt.AddInstruction(Set_CF(), NO_NEUTRALS);
+    bt.AddInstruction(Nop(), NO_NEUTRALS);
+    bt.AddInstruction(Halt(), NO_NEUTRALS);
+    bt.AddInstruction(Disable_Interrupts(), NO_NEUTRALS);
+    bt.AddInstruction(Enable_Interrupts(), NO_NEUTRALS);
+    bt.AddInstruction(Interrupt_Mode0(), NO_NEUTRALS);
+    bt.AddInstruction(Interrupt_Mode1(), NO_NEUTRALS);
+    bt.AddInstruction(Interrupt_Mode2(), NO_NEUTRALS);
+
 
     stringificationFns[LD_A_lINT16] = [](Instruction n) -> string {
         stringstream ss;
@@ -1124,6 +1165,41 @@ Z80_Disassembler::Z80_Disassembler() {
 
     stringificationFns[IM2] = [](Instruction n) -> string {
         return "im 2";
+    };
+
+    stringificationFns[ADD_HL_REG] = [&](Instruction n) -> string {
+        stringstream ss;
+        ss << "add hl, ";
+        ss << stringify_ddregs[n.code[0] >> 4];
+        return ss.str();
+    };
+
+    stringificationFns[ADC_HL_REG] = [&](Instruction n) -> string {
+        stringstream ss;
+        ss << "adc hl, ";
+        ss << stringify_ddregs[(n.code[1] >> 4) - 0b100];
+        return ss.str();
+    };
+
+    stringificationFns[SBC_HL_REG] = [&](Instruction n) -> string {
+        stringstream ss;
+        ss << "sbc hl, ";
+        ss << stringify_ddregs[(n.code[1] >> 4) - 0b100];
+        return ss.str();
+    };
+
+    stringificationFns[ADD_IX_REG] = [&](Instruction n) -> string {
+        stringstream ss;
+        ss << "add ix, ";
+        ss << stringify_ppregs[n.code[1] >> 4];
+        return ss.str();
+    };
+
+    stringificationFns[ADD_IY_REG] = [&](Instruction n) -> string {
+        stringstream ss;
+        ss << "add ix, ";
+        ss << stringify_rrregs[n.code[1] >> 4];
+        return ss.str();
     };
 }
 

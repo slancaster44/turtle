@@ -53,6 +53,12 @@ public:
     vector<reg_qq> qqregs;
     map<reg_qq, string> stringify_qqregs;
 
+    vector<reg_pp> ppregs;
+    map<reg_pp, string> stringify_ppregs;
+
+    vector<reg_rr> rrregs;
+    map<reg_rr, string> stringify_rrregs;
+
 private:
     map<Instruction_Tag, function<string(Instruction n)>> stringificationFns;
     BitTree bt;

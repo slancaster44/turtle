@@ -905,7 +905,7 @@ Instruction Complement_CF() {
     return newInstruction(CCF, code, 1);
 }
 
-Instruction Set_Carry_Flag() {
+Instruction Set_CF() {
     uint8_t code[INS_LEN];
     code[0] = 0x37;
     return newInstruction(SCF, code, 1);
