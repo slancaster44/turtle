@@ -1197,9 +1197,39 @@ Z80_Disassembler::Z80_Disassembler() {
 
     stringificationFns[ADD_IY_REG] = [&](Instruction n) -> string {
         stringstream ss;
-        ss << "add ix, ";
+        ss << "add iy, ";
         ss << stringify_rrregs[n.code[1] >> 4];
         return ss.str();
+    };
+
+    stringificationFns[INC_REG16] = [&](Instruction n) -> string {
+        stringstream ss;
+        ss << "inc ";
+        ss << stringify_ddregs[n.code[1] >> 4];
+        return ss.str();
+    };
+
+    stringificationFns[INC_IX] = [](Instruction n) -> string {
+        return "inc ix";
+    };
+
+    stringificationFns[INC_IY] = [](Instruction n) -> string {
+        return "inc iy";
+    };
+
+    stringificationFns[DEC_REG16] = [&](Instruction n) -> string {
+        stringstream ss;
+        ss << "dec ";
+        ss << stringify_ddregs[n.code[1] >> 4];
+        return ss.str();
+    };
+
+    stringificationFns[DEC_IX] = [](Instruction n) -> string {
+        return "dec ix";
+    };
+
+    stringificationFns[DEC_IY] = [](Instruction n) -> string {
+        return "dec iy";
     };
 }
 

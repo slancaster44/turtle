@@ -1029,3 +1029,265 @@ Instruction Dec_IY() {
     code[1] = 0x2B;
     return newInstruction(DEC_IY, code, 2);
 }
+
+Instruction Rotate_Left_Carry_A() {
+    uint8_t code[INS_LEN];
+    code[0] = 0x07;
+    return newInstruction(RLCA, code, 1);
+}
+
+Instruction Rotate_Left_A() {
+    uint8_t code[INS_LEN];
+    code[0] = 0x17;
+    return newInstruction(RLA, code, 1);
+}
+
+Instruction Rotate_Right_Carry_A() {
+    uint8_t code[INS_LEN];
+    code[0] = 0x0F;
+    return newInstruction(RRCA, code, 1);
+}
+
+Instruction Rotate_Right_A() {
+    uint8_t code[INS_LEN];
+    code[0] = 0x1F;
+    return newInstruction(RRA, code, 1);
+}
+
+Instruction Rotate_Left_Carry_Reg(reg_r r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xCB;
+    code[1] = r;
+    return newInstruction(RLC_REG, code, 2);
+}
+
+Instruction Rotate_Left_Carry_lHL() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xCB;
+    code[1] = 0x06;
+    return newInstruction(RLC_lHL, code, 2);
+}
+
+Instruction Rotate_Left_Carry_lIXd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0xCB;
+    code[2] = d;
+    code[3] = 0x06;
+    return newInstruction(RLC_lIXd, code, 4);
+}
+
+Instruction Rotate_Left_Carry_lIYd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0xCB;
+    code[2] = d;
+    code[3] = 0x06;
+    return newInstruction(RLC_lIYd, code, 4);
+}
+
+Instruction Rotate_Left_Reg(reg_r r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xCB;
+    code[1] = 0b00010000 | r;
+    return newInstruction(RL_REG, code, 2);
+}
+
+Instruction Rotate_Left_lHL() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xCB;
+    code[1] = 0x16;
+    return newInstruction(RL_lHL, code, 2);
+}
+Instruction Rotate_Left_lIXd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0xCB;
+    code[2] = d;
+    code[3] = 0x16;
+    return newInstruction(RL_lIXd, code, 4);
+}
+
+Instruction Rotate_Left_lIYd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0xCB;
+    code[2] = d;
+    code[3] = 0x16;
+    return newInstruction(RLC_lIXd, code, 4);
+}
+
+Instruction Rotate_Right_Carry_Reg(reg_r r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xCB;
+    code[1] = 0b00001000 | r;
+    return newInstruction(RRC_REG, code, 2);
+}
+
+Instruction Rotate_Right_Carry_lHL() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xCB;
+    code[1] = 0x0E;
+    return newInstruction(RRC_lHL, code, 2);
+}
+
+Instruction Rotate_Right_Carry_lIXd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0xCB;
+    code[2] = d;
+    code[3] = 0x0E;
+    return newInstruction(RRC_lIXd, code, 4);
+}
+
+Instruction Rotate_Right_Carry_lIYd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0xCB;
+    code[2] = d;
+    code[3] = 0x0E;
+    return newInstruction(RRC_lIYd, code, 4);
+}
+
+Instruction Rotate_Right_Reg(reg_r r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xCB;
+    code[1] = 0b00001000 | r;
+    return newInstruction(RR_REG, code, 2);
+}
+
+Instruction Rotate_Right_lHL() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xCB;
+    code[1] = 0x1E;
+    return newInstruction(RR_lHL, code, 2);
+}
+
+Instruction Rotate_Right_lIXd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0xCB;
+    code[2] = d;
+    code[3] = 0x1E;
+    return newInstruction(RR_lIXd, code, 4);
+}
+
+Instruction Rotate_Right_lIYd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0xCB;
+    code[2] = d;
+    code[3] = 0x1E;
+    return newInstruction(RR_lIYd, code, 4);
+}
+
+Instruction Shift_Left_Arithmetic_Reg(reg_r r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xCB;
+    code[1] = 0b00100000 | r; 
+    return newInstruction(SLA_REG, code, 2);
+}
+
+Instruction Shift_Left_Arithmetic_lHL() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xCB;
+    code[1] = 0x26;
+    return newInstruction(SLA_lHL, code, 2);
+}
+
+Instruction Shift_Left_Arithmetic_lIXd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0xCB;
+    code[2] = d;
+    code[3] = 0x26;
+    return newInstruction(SLA_lIXd, code, 4);
+}
+
+Instruction Shift_Left_Arithmetic_lIYd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0xCB;
+    code[2] = d;
+    code[3] = 0x26;
+    return newInstruction(SLA_lIYd, code, 4);
+}
+
+Instruction Shift_Right_Arithmetic_Reg(reg_r r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xCB;
+    code[1] = 0b00101000 | r; 
+    return newInstruction(SRA_REG, code, 2);
+}
+
+Instruction Shift_Right_Arithmetic_lHL() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xCB;
+    code[1] = 0x2E;
+    return newInstruction(SRA_lHL, code, 2);
+}
+
+Instruction Shift_Right_Arithmetic_lIXd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0xCB;
+    code[2] = d;
+    code[3] = 0x2E;
+    return newInstruction(SRA_lIXd, code, 4);
+}
+
+Instruction Shift_Right_Arithmetic_lIYd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0xCB;
+    code[2] = d;
+    code[3] = 0x2E;
+    return newInstruction(SRA_lIYd, code, 4);
+}
+
+
+Instruction Shift_Right_Logical_Reg(reg_r r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xCB;
+    code[1] = 0b00111000 | r; 
+    return newInstruction(SRA_REG, code, 2);
+}
+
+Instruction Shift_Right_Logical_lHL() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xCB;
+    code[1] = 0x3E;
+    return newInstruction(SRL_lHL, code, 2);
+}
+
+Instruction Shift_Right_Logical_lIXd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0xCB;
+    code[2] = d;
+    code[3] = 0x3E;
+    return newInstruction(SRL_lIXd, code, 4);
+}
+
+Instruction Shift_Right_Logical_lIYd(uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0xCB;
+    code[2] = d;
+    code[3] = 0x3E;
+    return newInstruction(SRL_lIYd, code, 4);
+}
+
+Instruction Rotate_Left_Digit_A() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0x6F;
+    return newInstruction(RLD_lHL, code, 2);
+}
+
+Instruction Rotate_Right_Digit_A() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0x6F;
+    return newInstruction(RLD_lHL, code, 2);
+}

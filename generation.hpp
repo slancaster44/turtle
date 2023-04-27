@@ -134,6 +134,40 @@ enum Instruction_Tag {
     DEC_REG16,
     DEC_IX,
     DEC_IY,
+    RLCA,
+    RLA,
+    RRCA,
+    RRA,
+    RLC_REG,
+    RLC_lHL,
+    RLC_lIXd,
+    RLC_lIYd,
+    RL_REG,
+    RL_lHL,
+    RL_lIXd,
+    RL_lIYd,
+    RRC_REG,
+    RRC_lHL,
+    RRC_lIXd,
+    RRC_lIYd,
+    RR_REG,
+    RR_lHL,
+    RR_lIXd,
+    RR_lIYd,
+    SLA_REG,
+    SLA_lHL,
+    SLA_lIXd,
+    SLA_lIYd,
+    SRA_REG,
+    SRA_lHL,
+    SRA_lIXd,
+    SRA_lIYd,
+    SRL_REG,
+    SRL_lHL,
+    SRL_lIXd,
+    SRL_lIYd,
+    RLD,
+    RRD,
 };
 
 typedef struct {
@@ -383,32 +417,32 @@ Instruction Rotate_Right_Carry_A();         //CY = A[0]; A >> 1;
 Instruction Rotate_Right_A();               //(CY A) >> 1
 Instruction Rotate_Left_Carry_Reg(reg_r r);
 Instruction Rotate_Left_Carry_lHL();
-Instruction Rotate_Left_Carry_lIXd();
-Instruction Rotate_Left_Carry_lIYd();
+Instruction Rotate_Left_Carry_lIXd(uint8_t d);
+Instruction Rotate_Left_Carry_lIYd(uint8_t d);
 Instruction Rotate_Left_Reg(reg_r r);
 Instruction Rotate_Left_lHL();
-Instruction Rotate_Left_lIXd();
-Instruction Rotate_Left_lIYd();
+Instruction Rotate_Left_lIXd(uint8_t d);
+Instruction Rotate_Left_lIYd(uint8_t d);
 Instruction Rotate_Right_Carry_Reg(reg_r r);
 Instruction Rotate_Right_Carry_lHL();
-Instruction Rotate_Right_Carry_lIXd();
-Instruction Rotate_Right_Carry_lIYd();
+Instruction Rotate_Right_Carry_lIXd(uint8_t d);
+Instruction Rotate_Right_Carry_lIYd(uint8_t d);
 Instruction Rotate_Right_Reg(reg_r r);
 Instruction Rotate_Right_lHL();
-Instruction Rotate_Right_lIXd();
-Instruction Rotate_Right_lIYd();
+Instruction Rotate_Right_lIXd(uint8_t d);
+Instruction Rotate_Right_lIYd(uint8_t d);
 Instruction Shift_Left_Arithmetic_Reg(reg_r r);
 Instruction Shift_Left_Arithmetic_lHL();
-Instruction Shift_Left_Arithmetic_lIXd();
-Instruction Shift_Left_Arithmetic_lIYd();
+Instruction Shift_Left_Arithmetic_lIXd(uint8_t d);
+Instruction Shift_Left_Arithmetic_lIYd(uint8_t d);
 Instruction Shift_Right_Arithmetic_Reg(reg_r r);
 Instruction Shift_Right_Arithmetic_lHL();
-Instruction Shift_Right_Arithmetic_lIXd();
-Instruction Shift_Right_Arithmetic_lIYd();
+Instruction Shift_Right_Arithmetic_lIXd(uint8_t d);
+Instruction Shift_Right_Arithmetic_lIYd(uint8_t d);
 Instruction Shift_Right_Logical_Reg(reg_r r);
 Instruction Shift_Right_Logical_lHL();
-Instruction Shift_Right_Logical_lIXd();
-Instruction Shift_Right_Logical_lIYd();
+Instruction Shift_Right_Logical_lIXd(uint8_t d);
+Instruction Shift_Right_Logical_lIYd(uint8_t d);
 Instruction Rotate_Left_Digit_A();
 Instruction Rotate_Right_Digit_A();
 
