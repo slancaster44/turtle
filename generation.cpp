@@ -1282,12 +1282,108 @@ Instruction Rotate_Left_Digit_A() {
     uint8_t code[INS_LEN];
     code[0] = 0xED;
     code[1] = 0x6F;
-    return newInstruction(RLD_lHL, code, 2);
+    return newInstruction(RLD, code, 2);
 }
 
 Instruction Rotate_Right_Digit_A() {
     uint8_t code[INS_LEN];
     code[0] = 0xED;
     code[1] = 0x6F;
-    return newInstruction(RLD_lHL, code, 2);
+    return newInstruction(RRD, code, 2);
+}
+
+Instruction Bit_Reg(uint8_t n, reg_r r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xCB;
+    code[1] = 0b01000000 | (n << 3) | r;
+    return newInstruction(BIT_REG, code, 2);
+}
+
+Instruction Bit_lHL(uint8_t n) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xCB;
+    code[1] = 0b01000110 | (n << 3);
+    return newInstruction(BIT_lHL, code, 2);
+}
+
+Instruction Bit_lIXd(uint8_t n, uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0xCB;
+    code[2] = d;
+    code[3] = 0b01000110 | n << 3;
+    return newInstruction(BIT_lIXd, code, 4);
+}
+
+Instruction Bit_lIYd(uint8_t n, uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0xCB;
+    code[2] = d;
+    code[3] = 0b01000110 | n << 3;
+    return newInstruction(BIT_lIYd, code, 4);
+}
+
+Instruction Set_Reg(uint8_t n, reg_r r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xCB;
+    code[1] = 0b11000000 | (n << 3) | r;
+    return newInstruction(SET_REG, code, 2);
+}
+
+Instruction Set_lHL(uint8_t n) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xCB;
+    code[1] = 0b11000110 | (n << 3);
+    return newInstruction(SET_lHL, code, 2);
+}
+
+Instruction Set_lIXd(uint8_t n, uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0xCB;
+    code[2] = d;
+    code[3] = 0b11000110 | n << 3;
+    return newInstruction(SET_lIXd, code, 4);
+}
+
+Instruction Set_lIYd(uint8_t n, uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0xCB;
+    code[2] = d;
+    code[3] = 0b11000110 | n << 3;
+    return newInstruction(SET_lIYd, code, 4);
+}
+
+Instruction Reset_Reg(uint8_t n, reg_r r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xCB;
+    code[1] = 0b10000000 | (n << 3) | r;
+    return newInstruction(RESET_REG, code, 2);
+}
+
+Instruction Reset_lHL(uint8_t n) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xCB;
+    code[1] = 0b10000110 | (n << 3);
+    return newInstruction(RESET_lHL, code, 2);
+}
+
+Instruction Reset_lIXd(uint8_t n, uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0xCB;
+    code[2] = d;
+    code[3] = 0b10000110 | n << 3;
+    return newInstruction(RESET_lIXd, code, 4);
+}
+
+Instruction Reset_lIYd(uint8_t n, uint8_t d) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0xCB;
+    code[2] = d;
+    code[3] = 0b10000110 | n << 3;
+    return newInstruction(RESET_lIYd, code, 4);
 }

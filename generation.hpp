@@ -168,6 +168,18 @@ enum Instruction_Tag {
     SRL_lIYd,
     RLD,
     RRD,
+    BIT_REG,
+    BIT_lHL,
+    BIT_lIXd,
+    BIT_lIYd,
+    SET_REG,
+    SET_lHL,
+    SET_lIXd,
+    SET_lIYd,
+    RESET_REG,
+    RESET_lHL,
+    RESET_lIXd,
+    RESET_lIYd,
 };
 
 typedef struct {
@@ -449,16 +461,16 @@ Instruction Rotate_Right_Digit_A();
 /*Bit Set & Reset Group */
 Instruction Bit_Reg(uint8_t n, reg_r r);
 Instruction Bit_lHL(uint8_t n);
-Instruction Bit_lIXd(uint8_t n);
-Instruction Bit_lIYd(uint8_t n);
+Instruction Bit_lIXd(uint8_t n, uint8_t d);
+Instruction Bit_lIYd(uint8_t n, uint8_t d);
 Instruction Set_Reg(uint8_t n, reg_r r);
 Instruction Set_lHL(uint8_t n);
-Instruction Set_lIXd(uint8_t n);
-Instruction Set_lIYd(uint8_t n);
+Instruction Set_lIXd(uint8_t n, uint8_t d);
+Instruction Set_lIYd(uint8_t n, uint8_t d);
 Instruction Reset_Reg(uint8_t n, reg_r r);
 Instruction Reset_lHL(uint8_t n);
-Instruction Reset_lIXd(uint8_t n);
-Instruction Reset_lIYd(uint8_t n);
+Instruction Reset_lIXd(uint8_t n, uint8_t d);
+Instruction Reset_lIYd(uint8_t n, uint8_t d);
 
 /* Jump Group */
 Instruction Jump_lInt16(uint16_t addr);
