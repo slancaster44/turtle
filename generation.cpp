@@ -1445,3 +1445,50 @@ Instruction Decrement_Jump_NZ(uint8_t offset) {
     return newInstruction(DJNZ, code, 2);
 }
 
+Instruction Call(uint16_t addr) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xCD;
+    code[1] = (uint8_t) addr >> 8;
+    code[2] = (uint8_t) (addr & 0x00FF);
+    return newInstruction(CALL, code, 3);
+}
+
+Instruction Call_CC(status_cc cc, uint16_t addr) {
+    uint8_t code[INS_LEN];
+    code[0] = 0b11000100 | (cc << 3);
+    code[1] = (uint8_t) addr >> 8;
+    code[2] = (uint8_t) (addr & 0x00FF);
+    return newInstruction(CALL_CC, code, 3);
+}
+
+Instruction Return() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xC9;
+    return newInstruction(RET, code, 1);
+}
+
+Instruction Return_CC(status_cc cc) {
+    uint8_t code[INS_LEN];
+    code[0] = 0b11000000 | (cc << 3);
+    return newInstruction(RET_CC, code, 1);
+}
+
+Instruction Return_From_Interrupt() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0x4D;
+    return newInstruction(RETI, code, 2);
+}
+
+Instruction Return_From_Nonmaskable() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0x45;
+    return newInstruction(RETN, code, 2);
+}
+
+Instruction Reset(reset_p p) {
+    uint8_t code[INS_LEN];
+    code[0] = 0b11000111 | (p << 3);
+    return newInstruction(RST_P, code, 1);
+}
