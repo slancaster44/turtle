@@ -1387,3 +1387,61 @@ Instruction Reset_lIYd(uint8_t n, uint8_t d) {
     code[3] = 0b10000110 | n << 3;
     return newInstruction(RESET_lIYd, code, 4);
 }
+
+Instruction Jump_lInt16(uint16_t addr) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xC3;
+    code[1] = (uint8_t) addr >> 8;
+    code[2] = (uint8_t) (addr & 0x00FF);
+    return newInstruction(JP_lINT16, code, 3);
+}
+
+Instruction Jump_lHL() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xE9;
+    return newInstruction(JP_lHL, code, 1);
+}
+
+Instruction Jump_lIX() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDD;
+    code[1] = 0xE9;
+    return newInstruction(JP_lIX, code, 2);
+}
+
+Instruction Jump_lIY() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xFD;
+    code[1] = 0xE9;
+    return newInstruction(JP_lIY, code, 2);
+}
+
+Instruction Jump_CC_lInt16(status_cc cc, uint16_t addr) {
+    uint8_t code[INS_LEN];
+    code[0] = 0b11000010 | (cc << 3);
+    code[1] = (uint8_t) addr >> 8;
+    code[2] = (uint8_t) (addr & 0x00FF);
+    return newInstruction(JP_CC_lINT16, code, 3);
+}
+
+Instruction Jump_Relative(uint8_t offset) {
+    uint8_t code[INS_LEN];
+    code[0] = 0x18;
+    code[1] = offset;
+    return newInstruction(JR, code, 2);
+}
+
+Instruction Jump_Realtive_C(status_c c, uint8_t offset) {
+    uint8_t code[INS_LEN];
+    code[0] = 0b00100000 | (c << 3);
+    code[1] = offset;
+    return newInstruction(JR_C_OFF8, code, 2);
+}
+
+Instruction Decrement_Jump_NZ(uint8_t offset) {
+    uint8_t code[INS_LEN];
+    code[0] = 0x10;
+    code[1] = offset;
+    return newInstruction(DJNZ, code, 2);
+}
+

@@ -180,6 +180,21 @@ enum Instruction_Tag {
     RESET_lHL,
     RESET_lIXd,
     RESET_lIYd,
+    JP_lINT16,
+    JP_lHL,
+    JP_lIX,
+    JP_lIY,
+    JP_CC_lINT16,
+    JR,
+    JR_C_OFF8,
+    DJNZ,
+    CALL,
+    CALL_CC,
+    RET,
+    RET_CC,
+    RETI,
+    RETN,
+    RST_P,
 };
 
 typedef struct {
