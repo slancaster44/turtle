@@ -1492,3 +1492,87 @@ Instruction Reset(reset_p p) {
     code[0] = 0b11000111 | (p << 3);
     return newInstruction(RST_P, code, 1);
 }
+
+Instruction Input_A_lInt8(uint8_t addr) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xDB;
+    code[1] = addr;
+    return newInstruction(IN_A_lInt8, code, 2);
+}
+
+Instruction Input_Reg_lC(reg_r r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0b01000000 | (r << 3);
+    return newInstruction(IN_REG_lC, code, 2);
+}
+
+Instruction Input_Increment() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0xA2;
+    return newInstruction(INI, code, 2);
+}
+
+Instruction Input_Increment_Repeat() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0xB2;
+    return newInstruction(INIR, code, 2);
+}
+
+Instruction Input_Decrement() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0xAA;
+    return newInstruction(IND, code, 2);
+}
+
+Instruction Input_Decrement_Repeat() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0xBA;
+    return newInstruction(INDR, code, 2);
+}
+
+Instruction Output_lINT8_A(uint8_t addr) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xD3;
+    code[1] = addr;
+    return newInstruction(OUT_lINT8_A, code, 2);
+}
+
+Instruction Output_lC_Reg(reg_r r) {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0b01000001 | (r << 3);
+    return newInstruction(OUT_lC_REG, code, 2);
+}
+
+Instruction Output_Increment() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0xA3;
+    return newInstruction(OUTI, code, 2);
+}
+
+Instruction Output_Increment_Repeat() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0xB3;
+    return newInstruction(OTIR, code, 2);
+}
+
+Instruction Output_Decrement() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0xAB;
+    return newInstruction(OUTD, code, 2);
+}
+
+Instruction Output_Decrement_Repeat() {
+    uint8_t code[INS_LEN];
+    code[0] = 0xED;
+    code[1] = 0xBB;
+    return newInstruction(OTDR, code, 2);
+}

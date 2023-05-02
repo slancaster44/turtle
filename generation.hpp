@@ -195,6 +195,18 @@ enum Instruction_Tag {
     RETI,
     RETN,
     RST_P,
+    IN_A_lInt8,
+    IN_REG_lC,
+    INI,
+    INIR,
+    IND,
+    INDR,
+    OUT_lINT8_A,
+    OUT_lC_REG,
+    OUTI,
+    OTIR,
+    OUTD,
+    OTDR,
 };
 
 typedef struct {
@@ -513,8 +525,8 @@ Instruction Input_Increment();
 Instruction Input_Increment_Repeat();
 Instruction Input_Decrement();
 Instruction Input_Decrement_Repeat();
-Instruction Output_A_lInt8(uint8_t addr);
-Instruction Output_Reg_lC(reg_r r);
+Instruction Output_lInt8_A(uint8_t addr);
+Instruction Output_lC_Reg(reg_r r);
 Instruction Output_Increment();
 Instruction Output_Increment_Repeat();
 Instruction Output_Decrement();
